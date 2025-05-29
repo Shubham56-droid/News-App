@@ -1,0 +1,9 @@
+.about-header {
+  background: url('./images/image1.jpg') no-repeat center center/cover;
+}
+.about-header h1 {
+  font-weight: 700;
+}
+.header-text-about{
+    backdrop-filter: blur(7px);
+}
