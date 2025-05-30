@@ -2,7 +2,8 @@ import './App.css';
 import React, { Component } from 'react'
 import Navbar from './components/Navbar';
 import News from './components/News';
-// import { BrowserRouter, Routes, Route } from 'react-router';
+// import About from './components/About';
+// import Contact from './components/Contact';
 
 export default class App extends Component {
 
@@ -11,8 +12,10 @@ export default class App extends Component {
       <div>
         <Navbar/>
         <News/>
+        {/* <About/>
+        <Contact/> */}
       </div>
-    )
+    );
   }
 }
 

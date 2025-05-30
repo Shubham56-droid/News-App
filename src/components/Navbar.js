@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import logo1 from "../images/image (3).jpg";
 
 export class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            Insight Orbit
+            <img src={logo1} alt="logo"/>
           </a>
           <button
             className="navbar-toggler"
@@ -27,12 +28,12 @@ export class Navbar extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <a className="nav-link" href="/about">
                   About
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <a className="nav-link" href="/contact">
                   Contact us
                 </a>
               </li>
