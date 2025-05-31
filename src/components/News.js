@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItems from "./NewsItems";
+import breakingNews from "../images/breakingNews.jpg";
 
 export class News extends Component {
   articles = [
@@ -74,35 +75,97 @@ export class News extends Component {
     this.state = {
       articles: this.articles,
       loading: false,
+      page: 1,
     };
   }
 
-  async componentDidMount(){
-      let url = "https://newsapi.org/v2/everything?q=cricket&apiKey=d4cd009f09ab49eeb7af0264dc5d6523";
-      let data = await fetch(url);
-      console.log(data);
-      let parsedData = await data.json();
-      console.log(parsedData);
-      this.setState({articles: parsedData.articles})
+  async componentDidMount() {
+    let url =
+      "https://newsapi.org/v2/top-headlines?q=trump&apiKey=d4cd009f09ab49eeb7af0264dc5d6523&page=1&pageSize=13";
+    let data = await fetch(url);
+    console.log(data);
+    let parsedData = await data.json();
+    console.log(parsedData);
+    this.setState({ articles: parsedData.articles });
   }
+
+  handlePreviousBtn = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?q=trump&apiKey=d4cd009f09ab49eeb7af0264dc5d6523&page=${
+      this.state.page - 1
+    }`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page - 1,
+      articles: parsedData.articles
+    });
+  };
+
+  handleNextBtn = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?q=trump&apiKey=d4cd009f09ab49eeb7af0264dc5d6523&page=${
+      this.state.page + 1
+    }`;
+    let data = await fetch(url);
+    console.log(data);
+    let parsedData = await data.json();
+    console.log(parsedData);
+    this.setState({
+      page: this.state.page + 1,
+      articles: parsedData.articles
+    });
+  };
+
   render() {
     return (
-      <div className="container my-3">
-        <h1><span>Top</span> Headlines</h1>
+      <div className="container my-3" id="newsCardContainer">
+        <h1>
+          <span>Top</span> Headlines
+        </h1>
 
-        <div>
-          {this.state.articles.filter((ele)=>{return ele.description}).map((element) => {
-            return (
-              <div className="newsContainer" key={element.url}>
-                <NewsItems
-                  title={element.title?element.title.slice(0,60):"Headline Coming Soon"}
-                  description={element.description?element.description.slice(0,80):"This article covers an important development. Click below to read the full story and stay informed."}
-                  imageUrl={element.urlToImage}
-                  newsUrl={element.url}
-                />
-              </div>
-            );
-          })}
+        <div className="boxNewsCardContainer">
+          {this.state.articles
+            .filter((element) => {
+              return element.description;
+            })
+            .map((element) => {
+              return (
+                <div className="newsContainer" key={element.url}>
+                  <NewsItems
+                    title={
+                      element.title
+                        ? element.title.slice(0, 60)
+                        : "Headline Coming Soon"
+                    }
+                    description={
+                      element.description
+                        ? element.description.slice(0, 80)
+                        : "This article covers an important development. Click below to read the full story and stay informed."
+                    }
+                    imageUrl={
+                      element.urlToImage ? element.urlToImage : breakingNews
+                    }
+                    newsUrl={element.url}
+                  />
+                </div>
+              );
+            })}
+        </div>
+        <div className="buttonContainer">
+          <button
+            disabled={this.state.page <= 1}
+            type="button"
+            className="btn btn-dark"
+            onClick={this.handlePreviousBtn}
+          >
+            &larr; Previous
+          </button>
+          <button
+            type="button"
+            className="btn btn-dark"
+            onClick={this.handleNextBtn}
+          >
+            Next &rarr;
+          </button>
         </div>
       </div>
     );
